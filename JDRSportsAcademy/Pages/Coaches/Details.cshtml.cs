@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,7 @@ namespace JDRSportsAcademy.Pages.Coaches
             _context = context;
         }
 
-      public Coach Coach { get; set; }
+        public Coach Coach { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,16 +27,17 @@ namespace JDRSportsAcademy.Pages.Coaches
                 return NotFound();
             }
 
-            var coach = await _context.Coaches.FirstOrDefaultAsync(m => m.CoachID == id);
-            if (coach == null)
+            Coach = await _context.Coaches
+                                  .Include(c => c.Sport)
+                                  .FirstOrDefaultAsync(m => m.CoachID == id);
+
+            if (Coach == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Coach = coach;
-            }
+
             return Page();
         }
     }
 }
+

@@ -64,21 +64,29 @@
         </dt>
         <dd class="col-sm-10">
             <table class="table">
-                <tr>
-                    <th>Sport Title</th>
-                    <th>FixtureName</th>
-                </tr>
-                @foreach (var item in Model.Student.Fixtures)
-                {
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SportID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FixtureName)
-                        </td>
+                        <th>Sport Title</th>
+                        <th>Fixture Name</th>
+                        <th>Fixture Date</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Student.Fixtures)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Sport.SportName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FixtureName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </dd>
     </dl>
@@ -87,3 +95,4 @@
     <a asp-page="./Edit" asp-route-id="@Model.Student?.StudentID">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
+

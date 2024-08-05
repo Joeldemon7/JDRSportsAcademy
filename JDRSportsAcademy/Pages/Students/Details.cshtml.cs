@@ -19,7 +19,7 @@ namespace JDRSportsAcademy.Pages.Students
             _context = context;
         }
 
-      public Student Student { get; set; } = default!; 
+        public Student Student { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,20 +29,18 @@ namespace JDRSportsAcademy.Pages.Students
             }
 
             Student = await _context.Students
-            .Include(s => s.Fixtures)
-            .ThenInclude(e => e.Sport)
-            .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.StudentID == id);
+                .Include(s => s.Fixtures)
+                    .ThenInclude(f => f.Sport)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.StudentID == id);
 
             if (Student == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Student = Student;
-            }
+
             return Page();
         }
     }
 }
+

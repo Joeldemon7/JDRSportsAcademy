@@ -1,0 +1,26 @@
+﻿@page
+@model JDRSportsAcademy.Pages.AboutModel
+@{
+    ViewData["Title"] = "About";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h2>Student Count by Fixture Dates</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Student Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Fixtures)
+        {
+            <tr>
+                <td>@item.FixtureDate?.ToShortDateString()</td>
+                <td>@item.StudentCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

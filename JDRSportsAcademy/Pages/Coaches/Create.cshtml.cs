@@ -21,7 +21,7 @@ namespace JDRSportsAcademy.Pages.Coaches
 
         public IActionResult OnGet()
         {
-        ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportID");
+        ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportName");
             return Page();
         }
 

@@ -36,7 +36,7 @@ namespace JDRSportsAcademy.Pages.Coaches
                 return NotFound();
             }
             Coach = coach;
-           ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportID");
+           ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportName");
             return Page();
         }
 

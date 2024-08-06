@@ -36,8 +36,8 @@ namespace JDRSportsAcademy.Pages.Fixtures
                 return NotFound();
             }
             Fixture = fixture;
-           ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportID");
-           ViewData["StudentID"] = new SelectList(_context.Students, "StudentID", "FirstName");
+           ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportName");
+           ViewData["StudentID"] = new SelectList(_context.Students, "StudentID", "FullName");
             return Page();
         }
 

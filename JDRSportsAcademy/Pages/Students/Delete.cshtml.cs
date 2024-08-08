@@ -1,4 +1,5 @@
-﻿using JDRSportsAcademy.Models;
+﻿using JDRSportsAcademy.Data;
+using JDRSportsAcademy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,11 +11,10 @@ namespace JDRSportsAcademy.Pages.Students
 {
     public class DeleteModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
         private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(JDRSportsAcademy.Data.SportContext context,
-                           ILogger<DeleteModel> logger)
+        public DeleteModel(SportContext context, ILogger<DeleteModel> logger)
         {
             _context = context;
             _logger = logger;
@@ -22,6 +22,7 @@ namespace JDRSportsAcademy.Pages.Students
 
         [BindProperty]
         public Student Student { get; set; }
+
         public string ErrorMessage { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
@@ -42,7 +43,7 @@ namespace JDRSportsAcademy.Pages.Students
 
             if (saveChangesError.GetValueOrDefault())
             {
-                ErrorMessage = String.Format("Delete {ID} failed. Try again", id);
+                ErrorMessage = $"An error occurred while trying to delete Student ID {id}. Please try again.";
             }
 
             return Page();
@@ -55,26 +56,26 @@ namespace JDRSportsAcademy.Pages.Students
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
-
-            if (student == null)
-            {
-                return NotFound();
-            }
-
             try
             {
+                var student = await _context.Students.FindAsync(id);
+
+                if (student == null)
+                {
+                    return NotFound();
+                }
+
                 _context.Students.Remove(student);
                 await _context.SaveChangesAsync();
+
                 return RedirectToPage("./Index");
             }
             catch (DbUpdateException ex)
             {
-                _logger.LogError(ex, ErrorMessage);
-
-                return RedirectToAction("./Delete",
-                                     new { id, saveChangesError = true });
+                _logger.LogError(ex, "Error deleting student with ID {StudentID}", id);
+                return RedirectToPage("./Delete", new { id, saveChangesError = true });
             }
         }
     }
 }
+

@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using JDRSportsAcademy.Data;
 using JDRSportsAcademy.Models;
+using System.Threading.Tasks;
 
 namespace JDRSportsAcademy.Pages.Students
 {
     public class DetailsModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
 
-        public DetailsModel(JDRSportsAcademy.Data.SportContext context)
+        public DetailsModel(SportContext context)
         {
             _context = context;
         }
 
-        public Student Student { get; set; } = default!;
+        public Student Student { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (!id.HasValue)
             {
                 return NotFound();
             }
@@ -43,4 +40,5 @@ namespace JDRSportsAcademy.Pages.Students
         }
     }
 }
+
 

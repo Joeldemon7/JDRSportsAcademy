@@ -2,53 +2,41 @@
 @model JDRSportsAcademy.Pages.Coaches.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Coach List";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-success">Create New Coach</a>
 </p>
-<table class="table">
+
+<table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Coach[0].CoachName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Coach[0].CoachNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Coach[0].CoachEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Coach[0].Sport)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Coach[0].CoachName)</th>
+            <th>@Html.DisplayNameFor(model => model.Coach[0].CoachNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Coach[0].CoachEmail)</th>
+            <th>@Html.DisplayNameFor(model => model.Coach[0].Sport.SportName)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Coach) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoachName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoachNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoachEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sport.SportName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CoachID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CoachID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CoachID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Coach)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.CoachName)</td>
+                <td>@Html.DisplayFor(modelItem => item.CoachNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.CoachEmail)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sport.SportName)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.CoachID" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.CoachID" class="btn btn-sm btn-info">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.CoachID" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this coach?');">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+

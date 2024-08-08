@@ -2,115 +2,112 @@
 @model JDRSportsAcademy.Pages.Students.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Students List";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-success">Create New Student</a>
 </p>
 
-<form method="get">
-    <p>
-        <label for="SearchString">Search by name:</label>
-        <input type="text" id="SearchString" name="SearchString" value="@Model.CurrentFilter" />
-        <input type="submit" value="Search" class="btn btn-primary" />
-        <a asp-page="./Index">Back to full List</a>
-    </p>
+<form method="get" class="form-inline mb-3">
+    <div class="form-group">
+        <label for="SearchString" class="mr-2">Search by name:</label>
+        <input type="text" id="SearchString" name="SearchString" value="@Model.CurrentFilter" class="form-control mr-2" />
+        <input type="submit" value="Search" class="btn btn-primary mr-2" />
+        <a asp-page="./Index" class="btn btn-secondary">Reset</a>
+    </div>
 </form>
 
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort" class="text-decoration-none">
                     @Html.DisplayNameFor(model => model.Student[0].FirstName)
+                    @if (Model.CurrentSort == "name_desc")
+                    {
+                        <i class="fas fa-sort-down"></i>
+                    }
+                    else if (Model.CurrentSort == "")
+                    {
+                        <i class="fas fa-sort-up"></i>
+                    }
                 </a>
             </th>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.LastNameSort">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.LastNameSort" class="text-decoration-none">
                     @Html.DisplayNameFor(model => model.Student[0].LastName)
+                    @if (Model.CurrentSort == "lastname_desc")
+                    {
+                        <i class="fas fa-sort-down"></i>
+                    }
+                    else if (Model.CurrentSort == "LastName")
+                    {
+                        <i class="fas fa-sort-up"></i>
+                    }
                 </a>
             </th>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort" class="text-decoration-none">
                     @Html.DisplayNameFor(model => model.Student[0].DOB)
+                    @if (Model.CurrentSort == "date_desc")
+                    {
+                        <i class="fas fa-sort-down"></i>
+                    }
+                    else if (Model.CurrentSort == "Date")
+                    {
+                        <i class="fas fa-sort-up"></i>
+                    }
                 </a>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].ContactNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].MedicalInformation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student[0].Email)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Student[0].Gender)</th>
+            <th>@Html.DisplayNameFor(model => model.Student[0].Address)</th>
+            <th>@Html.DisplayNameFor(model => model.Student[0].ContactNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Student[0].MedicalInformation)</th>
+            <th>@Html.DisplayNameFor(model => model.Student[0].Email)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Student)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.DOB)</td>
+                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                <td>@Html.DisplayFor(modelItem => item.ContactNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.MedicalInformation)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DOB)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MedicalInformation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.StudentID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.StudentID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.StudentID">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.StudentID" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.StudentID" class="btn btn-sm btn-info">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.StudentID" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-@{
-    var prevDisabled = !Model.Student.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Student.HasNextPage ? "disabled" : "";
-}
-
-<a asp-page="./Index"
-   asp-route-sortOrder="@Model.CurrentSort"
-   asp-route-pageIndex="@(Model.Student.PageIndex - 1)"
-   asp-route-currentFilter="@Model.CurrentFilter"
-   class="btn btn-primary @prevDisabled">
-    Previous
-</a>
-<a asp-page="./Index"
-   asp-route-sortOrder="@Model.CurrentSort"
-   asp-route-pageIndex="@(Model.Student.PageIndex + 1)"
-   asp-route-currentFilter="@Model.CurrentFilter"
-   class="btn btn-primary @nextDisabled">
-    Next
-</a>
+<nav aria-label="Student pagination">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Model.Student.HasPreviousPage ? "" : "disabled")">
+            <a asp-page="./Index"
+               asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.Student.PageIndex - 1)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               class="page-link">Previous</a>
+        </li>
+        <li class="page-item @(Model.Student.HasNextPage ? "" : "disabled")">
+            <a asp-page="./Index"
+               asp-route-sortOrder="@Model.CurrentSort"
+               asp-route-pageIndex="@(Model.Student.PageIndex + 1)"
+               asp-route-currentFilter="@Model.CurrentFilter"
+               class="page-link">Next</a>
+        </li>
+    </ul>
+</nav>
 

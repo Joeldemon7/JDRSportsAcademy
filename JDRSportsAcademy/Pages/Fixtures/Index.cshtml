@@ -2,65 +2,45 @@
 @model JDRSportsAcademy.Pages.Fixtures.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Fixture List";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-success">Create New Fixture</a>
 </p>
-<table class="table">
+
+<table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fixture[0].FixtureName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fixture[0].Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fixture[0].Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fixture[0].Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fixture[0].Sport)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fixture[0].Student)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Fixture[0].FixtureName)</th>
+            <th>@Html.DisplayNameFor(model => model.Fixture[0].Date)</th>
+            <th>@Html.DisplayNameFor(model => model.Fixture[0].Time)</th>
+            <th>@Html.DisplayNameFor(model => model.Fixture[0].Location)</th>
+            <th>@Html.DisplayNameFor(model => model.Fixture[0].Sport.SportName)</th>
+            <th>@Html.DisplayNameFor(model => model.Fixture[0].Student.FullName)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Fixture) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FixtureName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sport.SportName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.FullName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.FixtureID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.FixtureID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.FixtureID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Fixture)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.FixtureName)</td>
+                <td>@item.Date.ToString("MM/dd/yyyy")</td>
+                <td>@item.Time.ToString(@"hh\:mm")</td>
+                <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sport.SportName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Student.FullName)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.FixtureID" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.FixtureID" class="btn btn-sm btn-info">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.FixtureID" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this fixture?');">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+

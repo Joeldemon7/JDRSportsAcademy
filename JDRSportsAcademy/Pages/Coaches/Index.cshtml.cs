@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using JDRSportsAcademy.Data;
@@ -12,22 +9,25 @@ namespace JDRSportsAcademy.Pages.Coaches
 {
     public class IndexModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
 
-        public IndexModel(JDRSportsAcademy.Data.SportContext context)
+        public IndexModel(SportContext context)
         {
             _context = context;
         }
 
-        public IList<Coach> Coach { get;set; } = default!;
+        public IList<Coach> Coach { get; private set; } = default!;
 
         public async Task OnGetAsync()
         {
+            // Fetch the list of coaches along with their associated sport details.
             if (_context.Coaches != null)
             {
                 Coach = await _context.Coaches
-                .Include(c => c.Sport).ToListAsync();
+                                      .Include(c => c.Sport)
+                                      .ToListAsync();
             }
         }
     }
 }
+

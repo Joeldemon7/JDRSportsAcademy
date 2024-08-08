@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using JDRSportsAcademy.Models;
 using JDRSportsAcademy.Models.SportViewModels;
 using JDRSportsAcademy.Data;
 
@@ -25,7 +24,7 @@ namespace JDRSportsAcademy.Pages
         {
             var data = from fixture in _context.Fixtures
                        group fixture by fixture.Date into dateGroup
-                       select new FixtureDateGroup()
+                       select new FixtureDateGroup
                        {
                            FixtureDate = dateGroup.Key,
                            StudentCount = dateGroup.Count()
@@ -35,3 +34,4 @@ namespace JDRSportsAcademy.Pages
         }
     }
 }
+

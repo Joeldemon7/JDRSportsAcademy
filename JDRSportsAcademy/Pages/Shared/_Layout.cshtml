@@ -3,51 +3,53 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - JDRSportsAcademy</title>
+    <title>@ViewData["Title"] - JDR Sports Academy</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/JDRSportsAcademy.styles.css" asp-append-version="true" />
+    <meta name="description" content="Welcome to JDR Sports Academy, where we nurture the athletic skills of students through structured training programs." />
+    <meta name="keywords" content="Sports Academy, JDR, Students, Coaches, Fixtures, Sports" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">JDR Sports Academy</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/About">About</a>
+                            <a class="nav-link" asp-area="" asp-page="/About">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Students/Index">Students</a>
+                            <a class="nav-link" asp-area="" asp-page="/Students/Index">Students</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Sports/Index">Sports</a>
+                            <a class="nav-link" asp-area="" asp-page="/Sports/Index">Sports</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Fixtures/Index">Fixtures</a>
+                            <a class="nav-link" asp-area="" asp-page="/Fixtures/Index">Fixtures</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Coaches/Index">Coaches</a>
+                            <a class="nav-link" asp-area="" asp-page="/Coaches/Index">Coaches</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer mt-auto py-3 bg-light">
         <div class="container">
-            &copy; 2024 - JDR Sports Academy - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <span class="text-muted">&copy; 2024 - JDR Sports Academy - <a asp-area="" asp-page="/Privacy">Privacy</a></span>
         </div>
     </footer>
 

@@ -13,15 +13,17 @@ namespace JDRSportsAcademy.Pages.Coaches
 {
     public class EditModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
 
-        public EditModel(JDRSportsAcademy.Data.SportContext context)
+        public EditModel(SportContext context)
         {
             _context = context;
         }
 
         [BindProperty]
         public Coach Coach { get; set; } = default!;
+
+        public SelectList Sports { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,18 +32,20 @@ namespace JDRSportsAcademy.Pages.Coaches
                 return NotFound();
             }
 
-            var coach =  await _context.Coaches.FirstOrDefaultAsync(m => m.CoachID == id);
+            var coach = await _context.Coaches
+                                      .Include(c => c.Sport)
+                                      .FirstOrDefaultAsync(m => m.CoachID == id);
             if (coach == null)
             {
                 return NotFound();
             }
             Coach = coach;
-           ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportName");
+
+            Sports = new SelectList(await _context.Sports.ToListAsync(), "SportID", "SportName");
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -72,7 +76,8 @@ namespace JDRSportsAcademy.Pages.Coaches
 
         private bool CoachExists(int id)
         {
-          return _context.Coaches.Any(e => e.CoachID == id);
+            return _context.Coaches.Any(e => e.CoachID == id);
         }
     }
 }
+

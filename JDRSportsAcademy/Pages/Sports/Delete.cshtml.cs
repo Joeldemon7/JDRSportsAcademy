@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +19,7 @@ namespace JDRSportsAcademy.Pages.Sports
         }
 
         [BindProperty]
-      public Sport Sport { get; set; } = default!;
+        public Sport Sport { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,15 +28,11 @@ namespace JDRSportsAcademy.Pages.Sports
                 return NotFound();
             }
 
-            var sport = await _context.Sports.FirstOrDefaultAsync(m => m.SportID == id);
+            Sport = await _context.Sports.FirstOrDefaultAsync(m => m.SportID == id);
 
-            if (sport == null)
+            if (Sport == null)
             {
                 return NotFound();
-            }
-            else 
-            {
-                Sport = sport;
             }
             return Page();
         }
@@ -48,16 +43,26 @@ namespace JDRSportsAcademy.Pages.Sports
             {
                 return NotFound();
             }
+
             var sport = await _context.Sports.FindAsync(id);
 
             if (sport != null)
             {
-                Sport = sport;
-                _context.Sports.Remove(Sport);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    Sport = sport;
+                    _context.Sports.Remove(Sport);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    // Log the exception and return an error view or message
+                    return RedirectToPage("./Error");
+                }
             }
 
             return RedirectToPage("./Index");
         }
     }
 }
+

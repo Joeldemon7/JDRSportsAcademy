@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,7 +17,7 @@ namespace JDRSportsAcademy.Pages.Sports
             _context = context;
         }
 
-      public Sport Sport { get; set; } = default!; 
+        public Sport Sport { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,16 +26,14 @@ namespace JDRSportsAcademy.Pages.Sports
                 return NotFound();
             }
 
-            var sport = await _context.Sports.FirstOrDefaultAsync(m => m.SportID == id);
-            if (sport == null)
+            Sport = await _context.Sports.FirstOrDefaultAsync(m => m.SportID == id);
+
+            if (Sport == null)
             {
                 return NotFound();
-            }
-            else 
-            {
-                Sport = sport;
             }
             return Page();
         }
     }
 }
+

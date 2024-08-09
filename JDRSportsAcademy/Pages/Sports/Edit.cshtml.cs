@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using JDRSportsAcademy.Data;
 using JDRSportsAcademy.Models;
@@ -13,9 +11,9 @@ namespace JDRSportsAcademy.Pages.Sports
 {
     public class EditModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
 
-        public EditModel(JDRSportsAcademy.Data.SportContext context)
+        public EditModel(SportContext context)
         {
             _context = context;
         }
@@ -30,17 +28,15 @@ namespace JDRSportsAcademy.Pages.Sports
                 return NotFound();
             }
 
-            var sport =  await _context.Sports.FirstOrDefaultAsync(m => m.SportID == id);
-            if (sport == null)
+            Sport = await _context.Sports.FindAsync(id);
+
+            if (Sport == null)
             {
                 return NotFound();
             }
-            Sport = sport;
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -71,7 +67,8 @@ namespace JDRSportsAcademy.Pages.Sports
 
         private bool SportExists(int id)
         {
-          return (_context.Sports?.Any(e => e.SportID == id)).GetValueOrDefault();
+            return _context.Sports.Any(e => e.SportID == id);
         }
     }
 }
+

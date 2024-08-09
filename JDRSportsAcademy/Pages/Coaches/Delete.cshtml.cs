@@ -11,15 +11,15 @@ namespace JDRSportsAcademy.Pages.Coaches
 {
     public class DeleteModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
 
-        public DeleteModel(JDRSportsAcademy.Data.SportContext context)
+        public DeleteModel(SportContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Coach Coach { get; set; }
+        public Coach Coach { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,18 +39,18 @@ namespace JDRSportsAcademy.Pages.Coaches
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id == null || _context.Coaches == null)
+            if (Coach == null || _context.Coaches == null)
             {
                 return NotFound();
             }
 
-            Coach = await _context.Coaches.FindAsync(id);
+            var coach = await _context.Coaches.FindAsync(Coach.CoachID);
 
-            if (Coach != null)
+            if (coach != null)
             {
-                _context.Coaches.Remove(Coach);
+                _context.Coaches.Remove(coach);
                 await _context.SaveChangesAsync();
             }
 
@@ -58,4 +58,5 @@ namespace JDRSportsAcademy.Pages.Coaches
         }
     }
 }
+
 

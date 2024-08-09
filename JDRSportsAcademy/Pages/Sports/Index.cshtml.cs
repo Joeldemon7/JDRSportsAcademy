@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -17,13 +18,22 @@ namespace JDRSportsAcademy.Pages.Sports
         }
 
         public IList<Sport> Sport { get; private set; } = default!;
+        public string? SearchString { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string? searchString)
         {
-            // Fetch the list of sports from the database
-            // and store it in the Sport property.
-            Sport = await _context.Sports.ToListAsync();
+            SearchString = searchString;
+
+            IQueryable<Sport> sportsQuery = _context.Sports;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                sportsQuery = sportsQuery.Where(s => s.SportName.Contains(searchString));
+            }
+
+            Sport = await sportsQuery.ToListAsync();
         }
     }
 }
+
 

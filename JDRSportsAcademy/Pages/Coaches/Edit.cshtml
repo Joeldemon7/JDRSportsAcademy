@@ -2,12 +2,12 @@
 @model JDRSportsAcademy.Pages.Coaches.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Coach";
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Coach</h4>
+<h4>Edit Coach</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,7 +16,7 @@
             <input type="hidden" asp-for="Coach.CoachID" />
             <div class="form-group">
                 <label asp-for="Coach.SportID" class="control-label"></label>
-                <select asp-for="Coach.SportID" class="form-control" asp-items="ViewBag.SportID"></select>
+                <select asp-for="Coach.SportID" class="form-control" asp-items="Model.Sports"></select>
                 <span asp-validation-for="Coach.SportID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,9 +42,12 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+

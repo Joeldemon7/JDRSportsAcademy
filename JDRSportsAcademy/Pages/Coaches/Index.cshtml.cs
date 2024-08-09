@@ -20,7 +20,6 @@ namespace JDRSportsAcademy.Pages.Coaches
 
         public async Task OnGetAsync()
         {
-            // Fetch the list of coaches along with their associated sport details.
             if (_context.Coaches != null)
             {
                 Coach = await _context.Coaches
@@ -30,4 +29,5 @@ namespace JDRSportsAcademy.Pages.Coaches
         }
     }
 }
+
 

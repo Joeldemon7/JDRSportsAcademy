@@ -12,28 +12,29 @@ namespace JDRSportsAcademy.Pages.Coaches
 {
     public class CreateModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
 
-        public CreateModel(JDRSportsAcademy.Data.SportContext context)
+        public CreateModel(SportContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public Coach Coach { get; set; } = default!;
+
+        public SelectList SportOptions { get; set; } = default!;
+
+        public void OnGet()
         {
-        ViewData["SportID"] = new SelectList(_context.Sports, "SportID", "SportName");
-            return Page();
+            SportOptions = new SelectList(_context.Sports, "SportID", "SportName");
         }
 
-        [BindProperty]
-        public Coach Coach { get; set; }
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                // Populate the dropdown list again in case of validation failure
+                SportOptions = new SelectList(_context.Sports, "SportID", "SportName");
                 return Page();
             }
 
@@ -44,3 +45,4 @@ namespace JDRSportsAcademy.Pages.Coaches
         }
     }
 }
+

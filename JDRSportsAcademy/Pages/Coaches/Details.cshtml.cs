@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,14 +10,14 @@ namespace JDRSportsAcademy.Pages.Coaches
 {
     public class DetailsModel : PageModel
     {
-        private readonly JDRSportsAcademy.Data.SportContext _context;
+        private readonly SportContext _context;
 
-        public DetailsModel(JDRSportsAcademy.Data.SportContext context)
+        public DetailsModel(SportContext context)
         {
             _context = context;
         }
 
-        public Coach Coach { get; set; }
+        public Coach Coach { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -40,4 +39,5 @@ namespace JDRSportsAcademy.Pages.Coaches
         }
     }
 }
+
 

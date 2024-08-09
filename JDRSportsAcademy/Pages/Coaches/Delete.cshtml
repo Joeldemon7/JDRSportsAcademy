@@ -2,14 +2,14 @@
 @model JDRSportsAcademy.Pages.Coaches.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Coach";
 }
 
-<h1>Delete</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h3>Are you sure you want to delete this Coach?</h3>
 <div>
-    <h4>Coach</h4>
+    <h4>Coach Details</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -44,4 +44,5 @@
         <a asp-page="./Index">Back to List</a>
     </form>
 </div>
+
 

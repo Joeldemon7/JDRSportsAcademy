@@ -18,6 +18,7 @@ namespace JDRSportsAcademy.Data
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Coach> Coaches { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,7 @@ namespace JDRSportsAcademy.Data
             modelBuilder.Entity<Fixture>().ToTable("Fixture");
             modelBuilder.Entity<Student>().ToTable("Student");
             modelBuilder.Entity<Coach>().ToTable("Coach");
+            modelBuilder.Entity<Feedback>().ToTable("Feedback");
         }
     }
 }

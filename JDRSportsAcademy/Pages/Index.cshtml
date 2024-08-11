@@ -44,5 +44,54 @@
             </div>
         </div>
     </div>
+
+    <div class="mt-5">
+        <h2>We Value Your Feedback</h2>
+        <p>Please let us know how your experience with JDR Sports Academy has been. Your feedback helps us improve our services.</p>
+        <form method="post">
+            <div class="form-group">
+                <label for="FeedbackName">Name</label>
+                <input type="text" class="form-control" id="FeedbackName" name="FeedbackName" placeholder="Your name (optional)" />
+            </div>
+            <div class="form-group">
+                <label for="FeedbackEmail">Email</label>
+                <input type="email" class="form-control" id="FeedbackEmail" name="FeedbackEmail" placeholder="Your email (optional)" />
+            </div>
+            <div class="form-group">
+                <label for="FeedbackMessage">Feedback</label>
+                <textarea class="form-control" id="FeedbackMessage" name="FeedbackMessage" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </form>
+
+        @if (Model.IsFeedbackSubmitted)
+        {
+            <div class="alert alert-success mt-3">
+                Thank you for your feedback!
+            </div>
+        }
+    </div>
+
+    <div class="mt-5">
+        <h2>Recent Feedback</h2>
+        @if (Model.FeedbackList.Any())
+        {
+            <ul class="list-group">
+                @foreach (var feedback in Model.FeedbackList)
+                {
+                    <li class="list-group-item">
+                        <strong>@feedback.Name ?? "Anonymous"</strong>
+                        <span class="text-muted">@feedback.SubmittedOn.ToString("MM/dd/yyyy")</span>
+                        <p>@feedback.Message</p>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No feedback has been submitted yet. Be the first to share your thoughts!</p>
+        }
+    </div>
 </div>
+
 

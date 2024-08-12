@@ -42,6 +42,9 @@ namespace JDRSportsAcademy.Pages
             IsFeedbackSubmitted = false;
         }
 
+        [BindProperty]
+        public int FeedbackRating { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
@@ -50,7 +53,8 @@ namespace JDRSportsAcademy.Pages
                 {
                     Name = FeedbackName,
                     Email = FeedbackEmail,
-                    Message = FeedbackMessage
+                    Message = FeedbackMessage,
+                    Rating = FeedbackRating
                 };
 
                 _context.Feedbacks.Add(feedback);

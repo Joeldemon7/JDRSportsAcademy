@@ -1,4 +1,11 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Star Rating JavaScript
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll('#star-rating label');
 
-// Write your JavaScript code.
+    stars.forEach(star => {
+        star.addEventListener('click', function () {
+            stars.forEach(s => s.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+});

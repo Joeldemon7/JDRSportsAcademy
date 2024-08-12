@@ -16,3 +16,33 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Star Rating Styles */
+.star-rating {
+    direction: rtl;
+    font-size: 2em;
+    unicode-bidi: bidi-override;
+    display: inline-block;
+    position: relative;
+    width: 5.5em;
+}
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        color: #ddd;
+        cursor: pointer;
+        float: right;
+    }
+
+    .star-rating input:checked ~ label {
+        color: #f5c518; /* Filled star color */
+    }
+
+    .star-rating input:hover ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #f5c518; /* Hover star color */
+    }
